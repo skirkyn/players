@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestPropertySource;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -116,8 +117,16 @@ public class TransferListrResourceTest extends BaseResourceTest {
 
         LoginResult loginResultResultAnotherUser = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
         // transferring to the "another" user so it's another user who is authorized to perform the transfer
-        Transfer transferAfterCompletion = completeTransferAndReturnResult(transfer.getId(), anotherUser.getId(), loginResultResultAnotherUser.getToken());
+        Transfer transferAfterCompletion = completeTransferAndReturnResult(transfer.getId(), anotherUser.getId(),
+                loginResultResultAnotherUser.getToken());
         Assertions.assertNotNull(transferAfterCompletion.getBuyerId());
+
+        Player afterTransfer = getPlayerAndReturnResult(player.getId(), loginResult.getToken());
+
+        // verify that the players value raised
+        Assertions.assertTrue(new BigDecimal(player.getValue().replaceAll("\\$", "")).compareTo(
+                new BigDecimal(afterTransfer.getValue().replaceAll("\\$", ""))) < 0);
+
     }
 
     @Test

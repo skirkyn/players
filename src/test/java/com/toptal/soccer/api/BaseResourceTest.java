@@ -140,7 +140,7 @@ public class BaseResourceTest {
                 .accept(MediaType.APPLICATION_JSON_VALUE));
     }
 
-    protected Player getPlayerAndReturnResult(final Player player, final String playerId, final String token) throws Exception {
+    protected Player getPlayerAndReturnResult( final String playerId, final String token) throws Exception {
         byte[] playerResponse = getPlayer(playerId, token).andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsByteArray();
         return objectMapper.readValue(playerResponse, Player.class);

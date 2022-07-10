@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 /**
  * This class defines all web API that logically belongs to the TransferList resource
@@ -42,13 +44,15 @@ public class TransferListResource {
     /**
      * This method returns all the players that are on the transfer list
      *
+     * @param userId - curent user id
      * @param start - parameter for the pagination. Defines the beginning of the result list.Optional. Default = 0
      * @param size  - parameter for the pagination. Defines the size of the list to return. Optional. Default = 0
      * @return a list of players that are on the transfer list, capped with the pagination parameters
      */
     @GetMapping(path = "/transfer", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Transfer findAll(@RequestParam(defaultValue = "0") int start,
-                            @RequestParam(defaultValue = "20") int size) {
+    public List<Transfer> findAll(@RequestParam String userId,
+                                  @RequestParam(defaultValue = "0") int start,
+                                  @RequestParam(defaultValue = "20") int size) {
         throw new UnsupportedOperationException();
     }
 }

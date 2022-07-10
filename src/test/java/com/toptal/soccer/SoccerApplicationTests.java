@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @Disabled
 @SpringBootTest
-class ScreeningApplicationTests {
+class SoccerApplicationTests {
 
 	@Test
 	void contextLoads() {
