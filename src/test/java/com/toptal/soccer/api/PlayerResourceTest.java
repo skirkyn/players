@@ -1,6 +1,6 @@
 package com.toptal.soccer.api;
 
-import com.toptal.soccer.dto.Login;
+import com.toptal.soccer.dto.LoginResult;
 import com.toptal.soccer.dto.Player;
 import com.toptal.soccer.dto.User;
 import org.junit.jupiter.api.Assertions;
@@ -32,7 +32,7 @@ public class PlayerResourceTest extends BaseResourceTest {
 
 
         // log in with the second user
-        Login loginResult = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(EMAIL, PASSWORD);
 
         // find the user's team
         Player player = getFirstPlayer(user, loginResult);
@@ -66,17 +66,17 @@ public class PlayerResourceTest extends BaseResourceTest {
         // make sure it has been created
         Assertions.assertNotNull(secondUser.getId());
 
-        Login loginResultFirst = loginAndReturnResult(EMAIL, PASSWORD);
-        Assertions.assertNotNull(loginResultFirst);
+        LoginResult loginResultResultFirst = loginAndReturnResult(EMAIL, PASSWORD);
+        Assertions.assertNotNull(loginResultResultFirst);
 
-        Login loginResultSecond = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
-        Assertions.assertNotNull(loginResultSecond);
+        LoginResult loginResultResultSecond = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
+        Assertions.assertNotNull(loginResultResultSecond);
 
-        Player player = getFirstPlayer(firstUser, loginResultFirst);
+        Player player = getFirstPlayer(firstUser, loginResultResultFirst);
         // create update request
         Player updated = getPlayerForUpdate(player);
 
-        updatePlayer(updated, player.getId(), loginResultSecond.getToken()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
+        updatePlayer(updated, player.getId(), loginResultResultSecond.getToken()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
 
 
     }
@@ -90,7 +90,7 @@ public class PlayerResourceTest extends BaseResourceTest {
 
 
         // log in with the second user
-        Login loginResult = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(EMAIL, PASSWORD);
 
         // find the user's team
         Player player = getFirstPlayer(user, loginResult);
@@ -107,7 +107,7 @@ public class PlayerResourceTest extends BaseResourceTest {
 
 
         // log in with the second user
-        Login loginResult = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(EMAIL, PASSWORD);
 
         // find the user's team
         Player player = getFirstPlayer(user, loginResult);
@@ -128,16 +128,16 @@ public class PlayerResourceTest extends BaseResourceTest {
         // make sure it has been created
         Assertions.assertNotNull(secondUser.getId());
 
-        Login loginResultFirst = loginAndReturnResult(EMAIL, PASSWORD);
-        Assertions.assertNotNull(loginResultFirst);
+        LoginResult loginResultResultFirst = loginAndReturnResult(EMAIL, PASSWORD);
+        Assertions.assertNotNull(loginResultResultFirst);
 
-        Login loginResultSecond = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
-        Assertions.assertNotNull(loginResultSecond);
+        LoginResult loginResultResultSecond = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
+        Assertions.assertNotNull(loginResultResultSecond);
 
-        Player player = getFirstPlayer(firstUser, loginResultFirst);
+        Player player = getFirstPlayer(firstUser, loginResultResultFirst);
 
 
-        getPlayer(player.getId(), loginResultSecond.getToken()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
+        getPlayer(player.getId(), loginResultResultSecond.getToken()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
 
 
     }
@@ -151,7 +151,7 @@ public class PlayerResourceTest extends BaseResourceTest {
 
 
         // log in with the second user
-        Login loginResult = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(EMAIL, PASSWORD);
 
         // find the user's team
         Player player = getFirstPlayer(user, loginResult);

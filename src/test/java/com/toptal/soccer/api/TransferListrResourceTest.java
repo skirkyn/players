@@ -1,6 +1,6 @@
 package com.toptal.soccer.api;
 
-import com.toptal.soccer.dto.Login;
+import com.toptal.soccer.dto.LoginResult;
 import com.toptal.soccer.dto.Player;
 import com.toptal.soccer.dto.Transfer;
 import com.toptal.soccer.dto.User;
@@ -36,7 +36,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
 
 
         // log in with the second user
-        Login loginResult = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(EMAIL, PASSWORD);
 
         // find the user's team
         Player player = getFirstPlayer(user, loginResult);
@@ -54,10 +54,10 @@ public class TransferListrResourceTest extends BaseResourceTest {
 
 
         // log in with the second user
-        Login firstLoginResult = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult firstLoginResultResult = loginAndReturnResult(EMAIL, PASSWORD);
 
         // find the user's team
-        Player player = getFirstPlayer(firstUser, firstLoginResult);
+        Player player = getFirstPlayer(firstUser, firstLoginResultResult);
 
         User secondUser = createAndReturnUser(OTHER_EMAIL, PASSWORD);
         // make sure it has been created
@@ -65,9 +65,9 @@ public class TransferListrResourceTest extends BaseResourceTest {
 
 
         // log in with the second user
-        Login secondLoginResult = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult secondLoginResultResult = loginAndReturnResult(EMAIL, PASSWORD);
         Transfer toAdd = new Transfer(null, TRANSFER_PRICE, player, firstUser.getId(), null);
-        addTransfer(toAdd, secondLoginResult.getToken()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
+        addTransfer(toAdd, secondLoginResultResult.getToken()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
 
     }
 
@@ -79,7 +79,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
 
 
         // log in with the second user
-        Login loginResult = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(EMAIL, PASSWORD);
 
         // find the user's team
         Player player = getFirstPlayer(user, loginResult);
@@ -101,7 +101,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
 
 
         // log in with the second user
-        Login loginResult = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(EMAIL, PASSWORD);
 
         // find the user's team
         Player player = getFirstPlayer(user, loginResult);
@@ -114,9 +114,9 @@ public class TransferListrResourceTest extends BaseResourceTest {
 
         User anotherUser = createAndReturnUser(OTHER_EMAIL, PASSWORD);
 
-        Login loginResultAnotherUser = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
+        LoginResult loginResultResultAnotherUser = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
         // transferring to the "another" user so it's another user who is authorized to perform the transfer
-        Transfer transferAfterCompletion = completeTransferAndReturnResult(transfer.getId(), anotherUser.getId(), loginResultAnotherUser.getToken());
+        Transfer transferAfterCompletion = completeTransferAndReturnResult(transfer.getId(), anotherUser.getId(), loginResultResultAnotherUser.getToken());
         Assertions.assertNotNull(transferAfterCompletion.getBuyerId());
     }
 
@@ -130,7 +130,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
 
 
         // log in with the second user
-        Login loginResult = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(EMAIL, PASSWORD);
 
         // find the user's team
         Player player = getFirstPlayer(user, loginResult);
@@ -159,7 +159,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
 
 
         // log in with the second user
-        Login loginResult = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(EMAIL, PASSWORD);
 
         // find the user's team
         Player player = getFirstPlayer(user, loginResult);
@@ -184,7 +184,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
 
 
         // log in with the second user
-        Login loginResult = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(EMAIL, PASSWORD);
 
         // find the user's team
         Player player = getFirstPlayer(user, loginResult);
@@ -211,7 +211,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
 
 
         // log in with the second user
-        Login loginResult = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(EMAIL, PASSWORD);
 
         // find the user's team
         Player player = getFirstPlayer(user, loginResult);
@@ -222,9 +222,9 @@ public class TransferListrResourceTest extends BaseResourceTest {
 
         createAndReturnUser(OTHER_EMAIL, PASSWORD);
 
-        Login loginResultAnotherUser = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
+        LoginResult loginResultResultAnotherUser = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
 
-        List<Transfer> transfers = getTransfersAndReturnList(loginResultAnotherUser.getToken(), 20);
+        List<Transfer> transfers = getTransfersAndReturnList(loginResultResultAnotherUser.getToken(), 20);
         Assertions.assertNotNull(transfers);
         Assertions.assertEquals(1, transfers.size());
         Assertions.assertEquals(transfer, transfers.get(0));
@@ -238,7 +238,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
 
 
         // log in with the second user
-        Login loginResult = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(EMAIL, PASSWORD);
 
         // find the user's team
         List<Player> players = getPlayers(user, loginResult);
@@ -252,9 +252,9 @@ public class TransferListrResourceTest extends BaseResourceTest {
 
         createAndReturnUser(OTHER_EMAIL, PASSWORD);
 
-        Login loginResultAnotherUser = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
+        LoginResult loginResultResultAnotherUser = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
 
-        List<Transfer> transfers = getTransfersAndReturnList(loginResultAnotherUser.getToken(), 3);
+        List<Transfer> transfers = getTransfersAndReturnList(loginResultResultAnotherUser.getToken(), 3);
         Assertions.assertNotNull(transfers);
         Assertions.assertEquals(3, transfers.size());
 
@@ -271,7 +271,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
 
 
         // log in with the second user
-        Login loginResult = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(EMAIL, PASSWORD);
 
         // find the user's team
         Player player = getFirstPlayer(user, loginResult);

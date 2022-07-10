@@ -1,6 +1,6 @@
 package com.toptal.soccer.api;
 
-import com.toptal.soccer.dto.Login;
+import com.toptal.soccer.dto.LoginResult;
 import com.toptal.soccer.dto.Player;
 import com.toptal.soccer.dto.Team;
 import com.toptal.soccer.dto.User;
@@ -41,7 +41,7 @@ public class TeamResourceTest extends BaseResourceTest {
 
 
         // log in with the second user
-        Login loginResult = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(EMAIL, PASSWORD);
 
         // find the user's team
 
@@ -76,17 +76,17 @@ public class TeamResourceTest extends BaseResourceTest {
         // make sure it has been created
         Assertions.assertNotNull(secondUser.getId());
 
-        Login loginResultFirst = loginAndReturnResult(EMAIL, PASSWORD);
-        Assertions.assertNotNull(loginResultFirst);
+        LoginResult loginResultResultFirst = loginAndReturnResult(EMAIL, PASSWORD);
+        Assertions.assertNotNull(loginResultResultFirst);
 
-        Login loginResultSecond = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
-        Assertions.assertNotNull(loginResultSecond);
+        LoginResult loginResultResultSecond = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
+        Assertions.assertNotNull(loginResultResultSecond);
 
-        Team firstUsersTeam = getTeamAndReturnResult(firstUser.getId(), loginResultFirst.getToken());
+        Team firstUsersTeam = getTeamAndReturnResult(firstUser.getId(), loginResultResultFirst.getToken());
 
         // create update request
         Team updated = getTeamForUpdate(firstUsersTeam);
-        updateTeam(updated, firstUsersTeam.getId(), loginResultSecond.getToken()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
+        updateTeam(updated, firstUsersTeam.getId(), loginResultResultSecond.getToken()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
 
     }
 
@@ -97,10 +97,10 @@ public class TeamResourceTest extends BaseResourceTest {
         Assertions.assertNotNull(firstUser.getId());
 
 
-        Login loginResultFirst = loginAndReturnResult(EMAIL, PASSWORD);
-        Assertions.assertNotNull(loginResultFirst);
+        LoginResult loginResultResultFirst = loginAndReturnResult(EMAIL, PASSWORD);
+        Assertions.assertNotNull(loginResultResultFirst);
 
-        Team firstUsersTeam = getTeamAndReturnResult(firstUser.getId(), loginResultFirst.getToken());
+        Team firstUsersTeam = getTeamAndReturnResult(firstUser.getId(), loginResultResultFirst.getToken());
         Team updated = getTeamForUpdate(firstUsersTeam);
         updateTeam(updated, firstUsersTeam.getId(), null).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
     }
@@ -113,7 +113,7 @@ public class TeamResourceTest extends BaseResourceTest {
         Assertions.assertNotNull(user.getId());
 
         // log in with second user
-        Login loginResult = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(EMAIL, PASSWORD);
 
         // find the user's team
 
@@ -131,7 +131,7 @@ public class TeamResourceTest extends BaseResourceTest {
         Assertions.assertNotNull(user.getId());
 
         // log in with second user
-        Login loginResult = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(EMAIL, PASSWORD);
 
         // find the user's team
 
@@ -148,19 +148,19 @@ public class TeamResourceTest extends BaseResourceTest {
         Assertions.assertNotNull(firstUser.getId());
 
         // log in with second firstUser
-        Login loginResultFirst = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResultResultFirst = loginAndReturnResult(EMAIL, PASSWORD);
 
         // find the firstUser's team
-        Team team = getTeamAndReturnResult(firstUser.getId(), loginResultFirst.getToken());
+        Team team = getTeamAndReturnResult(firstUser.getId(), loginResultResultFirst.getToken());
 
         User secondUser = createAndReturnUser(OTHER_EMAIL, PASSWORD);
         // make sure it has been created
         Assertions.assertNotNull(secondUser.getId());
 
         // log in with second firstUser
-        Login loginResultSecond = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResultResultSecond = loginAndReturnResult(EMAIL, PASSWORD);
 
-        getPlayers(team.getId(), defaultPlayerCount + TEN, loginResultSecond.getToken()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
+        getPlayers(team.getId(), defaultPlayerCount + TEN, loginResultResultSecond.getToken()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
 
     }
 
@@ -171,10 +171,10 @@ public class TeamResourceTest extends BaseResourceTest {
         Assertions.assertNotNull(firstUser.getId());
 
         // log in with second firstUser
-        Login loginResultFirst = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResultResultFirst = loginAndReturnResult(EMAIL, PASSWORD);
 
         // find the firstUser's team
-        Team team = getTeamAndReturnResult(firstUser.getId(), loginResultFirst.getToken());
+        Team team = getTeamAndReturnResult(firstUser.getId(), loginResultResultFirst.getToken());
 
         getPlayers(team.getId(), defaultPlayerCount + TEN, null).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
 

@@ -1,6 +1,6 @@
 package com.toptal.soccer.api;
 
-import com.toptal.soccer.dto.Login;
+import com.toptal.soccer.dto.LoginResult;
 import com.toptal.soccer.dto.Team;
 import com.toptal.soccer.dto.User;
 import org.junit.jupiter.api.Assertions;
@@ -69,7 +69,7 @@ public class UserResourceTest extends BaseResourceTest {
         // make sure it has been created
         Assertions.assertNotNull(created.getId());
 
-        Login loginResult = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(EMAIL, PASSWORD);
         // perform get request
         Assertions.assertNotNull(getUser(created.getId(),  loginResult.getToken()));
     }
@@ -97,7 +97,7 @@ public class UserResourceTest extends BaseResourceTest {
         Assertions.assertNotNull(createdSecond.getId());
 
         // log in with the second user
-        Login loginResult = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
 
         // perform get request for the first user and receive unauthorized
         getUser(createdFirst.getId(), loginResult.getToken()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
@@ -120,7 +120,7 @@ public class UserResourceTest extends BaseResourceTest {
         Assertions.assertNotNull(created.getId());
 
         // log in
-        Login loginResult = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
 
         // read the team
         Team team = getTeamAndReturnResult(created.getId(), loginResult.getToken());
@@ -150,7 +150,7 @@ public class UserResourceTest extends BaseResourceTest {
         Assertions.assertNotNull(createdSecond.getId());
 
         // log in with the second user
-        Login loginResult = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
 
         // perform get request for the first user and receive unauthorized
         getTeam(createdFirst.getId(), loginResult.getToken()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));

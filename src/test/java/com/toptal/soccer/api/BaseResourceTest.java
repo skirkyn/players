@@ -3,7 +3,7 @@ package com.toptal.soccer.api;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toptal.soccer.dto.Credentials;
-import com.toptal.soccer.dto.Login;
+import com.toptal.soccer.dto.LoginResult;
 import com.toptal.soccer.dto.Player;
 import com.toptal.soccer.dto.Team;
 import com.toptal.soccer.dto.Transfer;
@@ -72,11 +72,11 @@ public class BaseResourceTest {
                 .content(objectMapper.writeValueAsBytes(new Credentials(email, password))));
     }
 
-    protected Login loginAndReturnResult(final String email, final String password) throws Exception {
+    protected LoginResult loginAndReturnResult(final String email, final String password) throws Exception {
 
         byte[] loginResponse = login(email, password).andExpect(status().is(HttpStatus.CREATED.value()))
                 .andReturn().getResponse().getContentAsByteArray();
-        return objectMapper.readValue(loginResponse, Login.class);
+        return objectMapper.readValue(loginResponse, LoginResult.class);
 
     }
 
@@ -188,23 +188,23 @@ public class BaseResourceTest {
         });
     }
 
-    protected List<Player> getPlayers(User firstUser, Login loginResultFirst) throws Exception {
+    protected List<Player> getPlayers(User firstUser, LoginResult loginResultResultFirst) throws Exception {
         // find first user's team
-        Team firstUsersTeam = getTeamAndReturnResult(firstUser.getId(), loginResultFirst.getToken());
+        Team firstUsersTeam = getTeamAndReturnResult(firstUser.getId(), loginResultResultFirst.getToken());
 
         //
-        List<Player> players = getPlayersAndReturnList(firstUsersTeam.getId(), 20, loginResultFirst.getToken());
+        List<Player> players = getPlayersAndReturnList(firstUsersTeam.getId(), 20, loginResultResultFirst.getToken());
 
         Assertions.assertNotNull(players);
 
         return players;
     }
-    protected Player getFirstPlayer(User firstUser, Login loginResultFirst) throws Exception {
+    protected Player getFirstPlayer(User firstUser, LoginResult loginResultResultFirst) throws Exception {
         // find first user's team
-        Team firstUsersTeam = getTeamAndReturnResult(firstUser.getId(), loginResultFirst.getToken());
+        Team firstUsersTeam = getTeamAndReturnResult(firstUser.getId(), loginResultResultFirst.getToken());
 
         //
-        List<Player> players = getPlayersAndReturnList(firstUsersTeam.getId(), 20, loginResultFirst.getToken());
+        List<Player> players = getPlayersAndReturnList(firstUsersTeam.getId(), 20, loginResultResultFirst.getToken());
 
         Assertions.assertNotNull(players);
         Assertions.assertNotEquals(0, players.size());

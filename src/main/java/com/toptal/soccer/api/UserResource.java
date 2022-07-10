@@ -1,7 +1,7 @@
 package com.toptal.soccer.api;
 
 import com.toptal.soccer.dto.Credentials;
-import com.toptal.soccer.dto.Login;
+import com.toptal.soccer.dto.LoginResult;
 import com.toptal.soccer.dto.Team;
 import com.toptal.soccer.dto.User;
 import org.springframework.http.MediaType;
@@ -45,7 +45,7 @@ public class UserResource {
      * @return - in case of success a login object is returned that contains user id and a JWT token
      */
     @PostMapping(path = "/user/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Login login(@RequestBody Credentials credentials) {
+    public LoginResult login(@RequestBody Credentials credentials) {
         throw new UnsupportedOperationException();
     }
 

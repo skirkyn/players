@@ -3,7 +3,7 @@ package com.toptal.soccer.dto;
 import lombok.Data;
 
 @Data
-public class Login {
+public class LoginResult {
     private String token;
     private String userId;
 }
