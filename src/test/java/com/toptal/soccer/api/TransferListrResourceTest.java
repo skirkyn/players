@@ -42,7 +42,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
         // find the user's team
         Player player = getFirstPlayer(user, loginResult);
 
-        Transfer toAdd = new Transfer(null, TRANSFER_PRICE, player, user.getId(), null);
+        Transfer toAdd = new Transfer(null,  player, user.getId(), null);
         Transfer transfer = addTransferAndReturnResult(toAdd, loginResult.getToken());
         Assertions.assertNotNull(transfer.getId());
     }
@@ -67,7 +67,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
 
         // log in with the second user
         LoginResult secondLoginResultResult = loginAndReturnResult(EMAIL, PASSWORD);
-        Transfer toAdd = new Transfer(null, TRANSFER_PRICE, player, firstUser.getId(), null);
+        Transfer toAdd = new Transfer(null,  player, firstUser.getId(), null);
         addTransfer(toAdd, secondLoginResultResult.getToken()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
 
     }
@@ -85,7 +85,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
         // find the user's team
         Player player = getFirstPlayer(user, loginResult);
 
-        Transfer toAdd = new Transfer(null, TRANSFER_PRICE, player, user.getId(), null);
+        Transfer toAdd = new Transfer(null,  player, user.getId(), null);
 
 
         addTransfer(toAdd, null).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
@@ -108,7 +108,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
         Player player = getFirstPlayer(user, loginResult);
 
         // for lesser money so newly registered user will have enough
-        Transfer toAdd = new Transfer(null, TRANSFER_PRICE, player, user.getId(), null);
+        Transfer toAdd = new Transfer(null, player, user.getId(), null);
         Transfer transfer = addTransferAndReturnResult(toAdd, loginResult.getToken());
 
         Assertions.assertNull(transfer.getSellerId());
@@ -145,7 +145,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
         Player player = getFirstPlayer(user, loginResult);
 
         // for lesser money so newly registered user will have enough
-        Transfer toAdd = new Transfer(null, TRANSFER_PRICE, player, user.getId(), null);
+        Transfer toAdd = new Transfer(null,  player, user.getId(), null);
         Transfer transfer = addTransferAndReturnResult(toAdd, loginResult.getToken());
 
         Assertions.assertNull(transfer.getSellerId());
@@ -174,7 +174,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
         Player player = getFirstPlayer(user, loginResult);
 
         // for lesser money so newly registered user will have enough
-        Transfer toAdd = new Transfer(null, TRANSFER_PRICE, player, user.getId(), null);
+        Transfer toAdd = new Transfer(null,  player, user.getId(), null);
         Transfer transfer = addTransferAndReturnResult(toAdd, loginResult.getToken());
 
         Assertions.assertNull(transfer.getSellerId());
@@ -199,7 +199,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
         Player player = getFirstPlayer(user, loginResult);
 
         // for lesser money so newly registered user will have enough
-        Transfer toAdd = new Transfer(null, TRANSFER_PRICE, player, user.getId(), null);
+        Transfer toAdd = new Transfer(null,  player, user.getId(), null);
         Transfer transfer = addTransferAndReturnResult(toAdd, loginResult.getToken());
 
         Assertions.assertNull(transfer.getSellerId());
@@ -226,7 +226,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
         Player player = getFirstPlayer(user, loginResult);
 
         // for lesser money so newly registered user will have enough
-        Transfer toAdd = new Transfer(null, TRANSFER_PRICE, player, user.getId(), null);
+        Transfer toAdd = new Transfer(null,  player, user.getId(), null);
         Transfer transfer = addTransferAndReturnResult(toAdd, loginResult.getToken());
 
         createAndReturnUser(OTHER_EMAIL, PASSWORD);
@@ -254,7 +254,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
 
         // for lesser money so newly registered user will have enough
         for (Player player : players) {
-            Transfer toAdd = new Transfer(null, TRANSFER_PRICE, player, user.getId(), null);
+            Transfer toAdd = new Transfer(null,  player, user.getId(), null);
             addTransferAndReturnResult(toAdd, loginResult.getToken());
         }
 
@@ -286,7 +286,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
         Player player = getFirstPlayer(user, loginResult);
 
         // for lesser money so newly registered user will have enough
-        Transfer toAdd = new Transfer(null, TRANSFER_PRICE, player, user.getId(), null);
+        Transfer toAdd = new Transfer(null,  player, user.getId(), null);
         Transfer transfer = addTransferAndReturnResult(toAdd, loginResult.getToken());
 
         Assertions.assertNull(transfer.getSellerId());

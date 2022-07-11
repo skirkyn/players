@@ -35,7 +35,6 @@ public class TransferManagerImpl implements TransferManager {
     public Transfer save(Transfer transfer) {
 
         Validate.notNull(transfer.getSeller().getId(), Constants.SELLER_ID_CAN_T_BE_NULL);
-        Validate.notNull(transfer.getPrice(), Constants.PRICE_CAN_T_BE_NULL);
         Validate.notNull(transfer.getPlayer().getId(), Constants.PLAYER_ID_CAN_T_BE_NULL);
 
         return transferRepo.save(transfer);
@@ -43,9 +42,9 @@ public class TransferManagerImpl implements TransferManager {
 
     @Override
     public List<Transfer> findAll(int start, int pageSize) {
-        Validate.isTrue(start > 0 && pageSize > 0, Constants.START_AND_PAGE_SIZE_HAVE_TO_BE_GREATER_THAN_ZERO);
+        Validate.isTrue(start >= 0 && pageSize > 0, Constants.START_AND_PAGE_SIZE_HAVE_TO_BE_GREATER_THAN_ZERO);
 
-        final Page<Transfer> result = transferRepo.findAll(PageRequest.of(start/pageSize, pageSize));
+        final Page<Transfer> result = transferRepo.findAllByBuyerIsNull(PageRequest.of(start/pageSize, pageSize));
 
         return result.stream().toList();
     }

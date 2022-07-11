@@ -8,6 +8,7 @@ public class Constants {
 
     public static final String SELLER_ID_CAN_T_BE_NULL = "Seller id can't be null";
     public static final String PLAYER_ID_CAN_T_BE_NULL = "Player id can't be null";
+    public static final String TEAM_CAN_T_BE_NULL = "Team can't be null";
     public static final String PRICE_CAN_T_BE_NULL = "Price can't be null";
     public static final String ID_CAN_T_BE_NULL = "Id can't be null";
     public static final String EMAIL_CAN_T_BE_NULL = "Email can't be null";

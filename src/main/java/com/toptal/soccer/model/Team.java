@@ -9,21 +9,23 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.List;
 
 @Data
 @Entity
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 public class Team {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
-
-    @OneToOne(mappedBy = "user", optional = false)
-    private User user;
 
     @Column(unique = true, nullable = false)
     private String name;
@@ -39,5 +41,5 @@ public class Team {
     private Currency budgetCurrency = Currency.DOLLAR;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private Collection<Player> players;
+    private List<Player> players;
 }

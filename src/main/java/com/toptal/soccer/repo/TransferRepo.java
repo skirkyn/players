@@ -6,8 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
 
-
+/**
+ * This interface give the access to the persistent transfer object
+ */
 public interface TransferRepo extends CrudRepository<Transfer, Long> {
-
-    Page<Transfer> findAll(Pageable pageable);
+    Page<Transfer> findAllByBuyerIsNull(Pageable pageable);
 }

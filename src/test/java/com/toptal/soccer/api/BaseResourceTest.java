@@ -20,7 +20,7 @@ import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class BaseResourceTest {
+public abstract class BaseResourceTest {
 
     protected static final String EMAIL = "email";
     protected static final String OTHER_EMAIL = "other_email";

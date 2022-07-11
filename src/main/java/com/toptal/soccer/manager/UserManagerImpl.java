@@ -51,6 +51,4 @@ public class UserManagerImpl implements UserManager {
         Validate.notNull(userId, Constants.ID_CAN_T_BE_NULL);
         return userRepo.findTeamByUserId(userId).orElseThrow(() -> new IllegalStateException(Constants.USER_DOESN_T_HAVE_A_TEAM));
     }
-
-
 }

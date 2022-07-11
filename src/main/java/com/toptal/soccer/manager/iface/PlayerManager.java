@@ -21,4 +21,5 @@ public interface PlayerManager {
      * @return a persisted player
      */
     Player save(Player player);
+
 }

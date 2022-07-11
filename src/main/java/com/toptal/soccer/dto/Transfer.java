@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Transfer {
     private String id;
-    private String price;
     private Player player;
     private String sellerId;
     private String buyerId;

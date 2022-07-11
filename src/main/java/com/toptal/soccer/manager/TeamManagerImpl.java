@@ -35,9 +35,10 @@ public class TeamManagerImpl implements TeamManager {
     @Override
     @Transactional
     public List<Player> findPlayersByTeamId(Long teamId, int start, int pageSize) {
-        Validate.isTrue(start > 0 && pageSize > 0, Constants.START_AND_PAGE_SIZE_HAVE_TO_BE_GREATER_THAN_ZERO);
+        Validate.notNull(teamId, Constants.ID_CAN_T_BE_NULL);
+        Validate.isTrue(start >= 0 && pageSize > 0, Constants.START_AND_PAGE_SIZE_HAVE_TO_BE_GREATER_THAN_ZERO);
 
-        final Page<Player> result = teamRepo.findPlayers(PageRequest.of(start/pageSize, pageSize));
+        final Page<Player> result = teamRepo.findPlayers(teamId, PageRequest.of(start/pageSize, pageSize));
 
         return result.stream().toList();
     }
@@ -46,7 +47,7 @@ public class TeamManagerImpl implements TeamManager {
     @Transactional
     public Team save(Team team) {
         Validate.notNull(team, Constants.
-                PLAYER_ID_CAN_T_BE_NULL);
+                TEAM_CAN_T_BE_NULL);
 
         return teamRepo.save(team);
     }

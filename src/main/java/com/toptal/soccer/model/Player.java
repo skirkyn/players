@@ -7,13 +7,18 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
-@Entity
 @Data
+@Entity
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 public class Player {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -28,7 +33,7 @@ public class Player {
     @Column(nullable = false)
     private String country;
 
-    @Column(columnDefinition = "DECIMAL(15,2)", nullable = false)
+    @Column(columnDefinition = "DECIMAL(15,2)", nullable = false, name = "market_value")
     private BigDecimal value;
 
     @Column(nullable = false)
