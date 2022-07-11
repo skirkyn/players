@@ -48,24 +48,32 @@ public class AESCrypto implements Crypto {
     }
 
     @Override
-    public String encrypt(String plainText) throws Exception {
+    public String encrypt(String plainText) {
 
         Validate.notEmpty(plainText, Constants.PLAIN_TEXT_CAN_T_BE_EMPTY);
 
-        Cipher cipher = Cipher.getInstance(transformation);
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-        return Base64.getEncoder()
-                .encodeToString(cipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8)));
+        try {
+            Cipher cipher = Cipher.getInstance(transformation);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            return Base64.getEncoder()
+                    .encodeToString(cipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8)));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public String decrypt(String cipherText) throws Exception {
+    public String decrypt(String cipherText) {
 
         Validate.notEmpty(cipherText, Constants.CIPHER_TEXT_CAN_T_BE_EMPTY);
 
-        Cipher cipher = Cipher.getInstance(transformation);
-        cipher.init(Cipher.DECRYPT_MODE, secretKey);
-        return new String(cipher.doFinal(Base64.getDecoder()
-                .decode(cipherText)));
+        try {
+            Cipher cipher = Cipher.getInstance(transformation);
+            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            return new String(cipher.doFinal(Base64.getDecoder()
+                    .decode(cipherText)));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

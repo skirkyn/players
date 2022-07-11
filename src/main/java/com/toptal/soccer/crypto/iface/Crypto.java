@@ -10,13 +10,13 @@ public interface Crypto {
      * @param plainText a plain text
      * @return cipher text. Encryption algorithm should be defined by the implementors
      */
-   String encrypt(final String plainText) throws Exception;
+   String encrypt(final String plainText);
 
     /**
      * Decrypts given cipher text to a plain text
      * @param cipherText a cipher text
      * @return plain text. Decryption algorithm should be defined by the implementors
      */
-   String decrypt(final String cipherText) throws Exception;
+   String decrypt(final String cipherText);
 
 }

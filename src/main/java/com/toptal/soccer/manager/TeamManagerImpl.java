@@ -9,6 +9,7 @@ import org.apache.commons.lang3.Validate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ public class TeamManagerImpl implements TeamManager {
 
     @Override
     @Transactional
-    public Optional<Team> findById(Long id) {
+    public Optional<Team> findById(final Long id) {
 
         Validate.notNull(id, Constants.ID_CAN_T_BE_NULL);
 
@@ -34,23 +35,29 @@ public class TeamManagerImpl implements TeamManager {
 
     @Override
     @Transactional
-    public List<Player> findPlayersByTeamId(Long teamId, int start, int pageSize) {
+    public List<Player> findPlayersByTeamId(final Long teamId, final int start, final int pageSize) {
         Validate.notNull(teamId, Constants.ID_CAN_T_BE_NULL);
         Validate.isTrue(start >= 0 && pageSize > 0, Constants.START_AND_PAGE_SIZE_HAVE_TO_BE_GREATER_THAN_ZERO);
 
-        final Page<Player> result = teamRepo.findPlayers(teamId, PageRequest.of(start/pageSize, pageSize));
+        final Page<Player> result = teamRepo.findPlayers(teamId, PageRequest.of(start / pageSize, pageSize));
 
         return result.stream().toList();
     }
 
     @Override
     @Transactional
-    public Team save(Team team) {
+    public Team save(final Team team) {
         Validate.notNull(team, Constants.
                 TEAM_CAN_T_BE_NULL);
 
         return teamRepo.save(team);
     }
 
+    @Override
+    @Transactional
+    public BigDecimal findTotalTeamValue(final Long id) {
+        Validate.notNull(id, Constants.ID_CAN_T_BE_NULL);
+        return teamRepo.findTotalPlayersValue(id);
+    }
 
 }

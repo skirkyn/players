@@ -29,7 +29,7 @@ public class TestUtil {
                 FAKER.address().country(),
                 BigDecimal.valueOf(1_000_000),
                 Currency.DOLLAR,
-                LocalDateTime.now().minus(age, ChronoUnit.YEARS).toInstant(UTC).getEpochSecond(),
+                LocalDateTime.now().minus(age, ChronoUnit.YEARS),
                 type);
 
     }

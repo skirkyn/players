@@ -38,7 +38,7 @@ public class TeamManagerImplTest {
     }
 
     @Test
-    public void testSavesIfPlayerNotNull() {
+    public void testSavesIfTeamNotNull() {
         // when
         final Team team = new Team();
         teamManager.save(team);
@@ -47,7 +47,7 @@ public class TeamManagerImplTest {
     }
 
     @Test
-    public void testGeneratesErrorIfPlayerIsNull() {
+    public void testGeneratesErrorIfTeamIsNull() {
         Assertions.assertThrows(NullPointerException.class, () -> teamManager.save(null));
     }
 
@@ -70,5 +70,18 @@ public class TeamManagerImplTest {
         Assertions.assertThrows(NullPointerException.class, () -> teamManager.findPlayersByTeamId(null, 10, 0));
         Assertions.assertThrows(NullPointerException.class, () -> teamManager.findPlayersByTeamId(null, -1, 1));
 
+    }
+
+    @Test
+    public void testFindsTheValueIfTeamIdNotNull() {
+        // when
+        teamManager.findTotalTeamValue(ID);
+        // then
+        verify(teamRepo).findTotalPlayersValue(eq(ID));
+    }
+
+    @Test
+    public void testGeneratesErrorIfTeamIdIsNull() {
+        Assertions.assertThrows(NullPointerException.class, () -> teamManager.findTotalTeamValue(null));
     }
 }

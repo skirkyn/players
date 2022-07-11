@@ -7,6 +7,19 @@ package com.toptal.soccer.orchestrator;
 public class Constants {
     public static final String EMAIL_CAN_T_BE_EMPTY = "Email can't be empty";
     public static final String PASSWORD_CAN_T_BE_EMPTY = "Password can't be empty";
+    public static final String PLAYER_CAN_T_BE_NULL = "Player can't be null";
+    public static final String PLAYER_ID_CAN_T_BE_NULL = "Player id can't be null";
+
+    public static final String PLAYER_DOESNT_EXIST = "Player doesn't exist";
+
+    public static final String FIRST_NAME_CANT_BE_EMPTY = "First name can't be empty";
+    public static final String LAST_NAME_CANT_BE_EMPTY = "Last name can't be empty";
+    public static final String COUNTRY_CANT_BE_EMPTY = "Country can't be empty";
+
+    public static final String TEAM_CAN_T_BE_NULL = "Player can't be null";
+    public static final String TEAM_ID_CAN_T_BE_NULL = "Player id can't be null";
+    public static final String TEAM_DOESNT_EXIST = "Team doesn't exist";
+    public static final String NAME_CANT_BE_EMPTY = "Name can't be empty";
     public static final String CAN_T_CREATE_A_USER = "Can't create a user";
     public static final String PLAYERS_ORCHESTRATOR_CAN_T_BE_NULL = "Players orchestrator can't be null";
     public static final String PLAYERS_SPECIFICATION_CAN_T_BE_NULL = "Players specification can't be null";
@@ -28,7 +41,7 @@ public class Constants {
     public static final String ONLY_ONE_CURRENCY_IS_SUPPORTED = "Only one currency is supported.";
 
 
-    private Constants(){
+    private Constants() {
 
     }
 }

@@ -13,6 +13,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -41,7 +42,7 @@ public class Player {
     private Currency valueCurrency = Currency.DOLLAR;
 
     @Column(nullable = false)
-    private long dateOfBirth;
+    private LocalDateTime dateOfBirth;
 
     @Column(nullable = false)
     private Type type;

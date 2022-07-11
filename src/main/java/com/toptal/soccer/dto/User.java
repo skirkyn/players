@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 public class User {
     private String id;
-    private Credentials credentials;
+    private String email;
+    private String password;
 }

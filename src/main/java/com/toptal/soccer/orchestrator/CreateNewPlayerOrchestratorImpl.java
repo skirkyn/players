@@ -40,7 +40,7 @@ public class CreateNewPlayerOrchestratorImpl implements CreateNewPlayerOrchestra
         final Name name = fullNameGenerator.get();
         player.setFirstName(name.firstName());
         player.setLastName(name.lastName());
-        player.setDateOfBirth(dobGenerator.get().atZone(UTC).toInstant().getEpochSecond());
+        player.setDateOfBirth(dobGenerator.get());
         player.setCountry(countryGenerator.get());
         player.setType(type);
         player.setValue(defaultValue);

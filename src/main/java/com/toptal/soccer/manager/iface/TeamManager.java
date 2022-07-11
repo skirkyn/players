@@ -3,6 +3,7 @@ package com.toptal.soccer.manager.iface;
 import com.toptal.soccer.model.Player;
 import com.toptal.soccer.model.Team;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,4 +34,11 @@ public interface TeamManager {
      * @return a persisted team
      */
     Team save(Team team);
+
+    /**
+     * Returns total team value for the team id
+     * @param id id on the team
+     * @return team value
+     */
+    BigDecimal findTotalTeamValue(Long id);
 }

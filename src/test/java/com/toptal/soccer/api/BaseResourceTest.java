@@ -36,7 +36,7 @@ public abstract class BaseResourceTest {
         return mockMvc.perform(MockMvcRequestBuilders.post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsBytes(new User(null, new Credentials(email, password)))));
+                .content(objectMapper.writeValueAsBytes(new User(null, email, password))));
     }
 
     protected User createAndReturnUser(final String email, final String password) throws Exception {
