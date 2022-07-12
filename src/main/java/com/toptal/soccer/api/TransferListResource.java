@@ -99,7 +99,6 @@ public class TransferListResource extends BaseResource {
     /**
      * This method returns all the players that are on the transfer list
      *
-     * @param userId         - current user id
      * @param start          - parameter for the pagination. Defines the beginning of the result list.Optional. Default = 0
      * @param size           - parameter for the pagination. Defines the size of the list to return. Optional. Default = 0
      * @param authentication current authentication

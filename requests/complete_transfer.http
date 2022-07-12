@@ -1,0 +1,19 @@
+POST localhost:8080/transfer/N9TC2ybtTUmIJxf44ToIfg==/to/rHcqqO6lllZMvxpWcrz84Q==
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJySGNxcU82bGxsWk12eHBXY3J6ODRRPT0iLCJleHAiOjE2NTc2OTA0MTUsImlhdCI6MTY1NzY1NDQxNX0.xzrBn9TDhYlt184fYe04-YDZnE5UxsFqxZNeEeLysfkRya-G7b0lyvjX7135-oMBAy31zQcnKmPPcJQyxFMvLw
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": "4yQunJqrpcOrALCnwNMXeQ==",
+  "player": {
+    "id": "N9TC2ybtTUmIJxf44ToIfg==",
+    "firstName": "CortneyChanged",
+    "lastName": "SchillerChanged",
+    "country": "Cook Islands",
+    "value": null,
+    "age": 0,
+    "type": "GOALKEEPER"
+  },
+  "sellerId": "N9TC2ybtTUmIJxf44ToIfg==",
+  "buyerId": null
+}

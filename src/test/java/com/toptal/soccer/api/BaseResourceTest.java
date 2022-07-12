@@ -8,7 +8,6 @@ import com.toptal.soccer.dto.Player;
 import com.toptal.soccer.dto.Team;
 import com.toptal.soccer.dto.Transfer;
 import com.toptal.soccer.dto.User;
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;

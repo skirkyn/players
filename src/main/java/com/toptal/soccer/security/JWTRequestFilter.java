@@ -32,8 +32,8 @@ public class JWTRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        if (!StringUtils.contains(request.getPathInfo(), "user/login")
-                && !StringUtils.contains(request.getPathInfo(), "user/register")) {
+        if (!StringUtils.contains(request.getRequestURI(), "user/login")
+                && !StringUtils.contains(request.getRequestURI(), "user/register")) {
 
 
             final String requestTokenHeader = request.getHeader(HttpHeaders.AUTHORIZATION);

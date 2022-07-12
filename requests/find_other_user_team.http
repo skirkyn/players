@@ -1,0 +1,4 @@
+GET localhost:8080/user/rHcqqO6lllZMvxpWcrz84Q==/team
+Accept: application/json
+Content-Type: text/html
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJySGNxcU82bGxsWk12eHBXY3J6ODRRPT0iLCJleHAiOjE2NTc2OTA0MTUsImlhdCI6MTY1NzY1NDQxNX0.xzrBn9TDhYlt184fYe04-YDZnE5UxsFqxZNeEeLysfkRya-G7b0lyvjX7135-oMBAy31zQcnKmPPcJQyxFMvLw
