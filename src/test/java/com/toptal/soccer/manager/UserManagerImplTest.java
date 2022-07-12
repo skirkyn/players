@@ -77,12 +77,39 @@ public class UserManagerImplTest {
     }
 
     @Test
-    public void testGeneratesErrorIfTeamIdIsNull(){
-        Assertions.assertThrows(NullPointerException.class, () -> userManager.findUserByEmail(null));
+    public void testGeneratesErrorIfUserIdIsNull(){
+        Assertions.assertThrows(NullPointerException.class, () -> userManager.findByTeamId(null));
     }
 
     @Test
     public void testGeneratesErrorIfUserDoesntHaveTeam(){
         Assertions.assertThrows(IllegalStateException.class, () -> userManager.findUserTeam(ID));
     }
+
+    @Test
+    public void testFindsByTeamIdIfTeamIdIsNotNull(){
+        // when
+        userManager.findByTeamId(ID);
+        // then
+        verify(userRepo).findByTeamId(eq(ID));
+    }
+
+    @Test
+    public void testGeneratesErrorIfTeamIdIsNull(){
+        Assertions.assertThrows(NullPointerException.class, () -> userManager.findUserByEmail(null));
+    }
+
+    @Test
+    public void testFindsByPlayerIdIfPlayerIdIsNotNull(){
+        // when
+        userManager.findByPlayerId(ID);
+        // then
+        verify(userRepo).findByPlayerId(eq(ID));
+    }
+
+    @Test
+    public void testGeneratesErrorIfPlayerIdIsNull(){
+        Assertions.assertThrows(NullPointerException.class, () -> userManager.findByPlayerId(null));
+    }
+
 }

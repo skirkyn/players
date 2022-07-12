@@ -12,24 +12,24 @@ public interface UserManager {
 
     /**
      * Finds user by id
-     * @param id id of the user
      *
+     * @param id id of the user
      * @return an optional object with the user if the user with such id exists. Otherwise, an empty optional
      */
-    Optional<User> findById(final Long id);
+    Optional<User> findById(Long id);
 
     /**
      * Finds user by email
-     * @param email email of the user
      *
+     * @param email email of the user
      * @return an optional object with the user if the user with such email exists. Otherwise, an empty optional
      */
-    Optional<User> findUserByEmail(final String email);
+    Optional<User> findUserByEmail(String email);
 
     /**
      * Save a user
-     * @param user to save
      *
+     * @param user to save
      * @return a saved user
      */
     User save(User user);
@@ -37,8 +37,26 @@ public interface UserManager {
 
     /**
      * Returns team  by the user id
+     *
      * @param userId user id
      * @return user's team
      */
     Team findUserTeam(Long userId);
+
+    /**
+     * Returns User by their team id.
+     *
+     * @param teamId team id of the user
+     * @return an optional object with the user if the user with such email exists. Otherwise, an empty optional
+     */
+    Optional<User> findByTeamId(Long teamId);
+
+    /**
+     * Returns User by their  -> player id.
+     *
+     * @param playerId team id of the user
+     * @return an optional object with the user if the user with such email exists. Otherwise, an empty optional
+     */
+    Optional<User> findByPlayerId(Long playerId);
 }
+

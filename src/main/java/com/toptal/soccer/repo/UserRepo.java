@@ -17,4 +17,11 @@ public interface UserRepo extends CrudRepository<User, Long> {
     Optional<Team> findTeamByUserId(@Param("userId") Long userId);
 
     Optional<User> findByEmail(String email);
+
+    Optional<User> findByTeamId(Long teamId);
+
+    @Query(value = "select u from user u " +
+            "join team t on t.id = u.team_id " +
+            "join team_players tp on tp.team_id = t.id where tp.id = :playerId", nativeQuery = true)
+    Optional<User> findByPlayerId(Long playerId);
 }

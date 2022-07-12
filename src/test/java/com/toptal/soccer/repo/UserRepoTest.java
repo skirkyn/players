@@ -43,6 +43,33 @@ public class UserRepoTest extends BaseRepoTest{
     }
 
 
+    @Test
+    @Transactional
+    public void testFindsUserByTeamId(){
+
+        // given
+        final User user = save(generateUserWithTeam(() -> null));
+
+        // then
+
+        Assertions.assertEquals(user, repo.findByTeamId(user.getTeam().getId()).get());
+
+    }
+
+
+
+    @Test
+    @Transactional
+    public void testFindsUserByPlayerId(){
+
+        // given
+        final User user = save(generateUserWithTeam(() -> null));
+
+        // then
+
+        Assertions.assertEquals(user, repo.findByPlayerId(user.getTeam().getPlayers().get(0).getId()).get());
+
+    }
 
 
 

@@ -3,6 +3,9 @@ package com.toptal.soccer.transformer;
 public final class Constants {
     public static final String DTO_CAN_T_BE_NULL = "DTO can't be null";
     public static final String ID_CAN_T_BE_NULL = "Id can't be null";
+    public static final String TOKEN_CAN_T_BE_NULL = "Token can't be null";
+    public static final String USER_CAN_T_BE_NULL = "User can't be null";
+
     public static final String COUNTRY_CAN_T_BE_EMPTY = "Country can't be empty";
     public static final String EMAIL_CAN_T_BE_EMPTY = "Email can't be empty";
     public static final String FIRST_NAME_CAN_T_BE_EMPTY = "First name can't be empty";

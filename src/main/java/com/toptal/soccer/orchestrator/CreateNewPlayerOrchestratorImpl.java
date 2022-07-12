@@ -17,10 +17,10 @@ import static java.time.ZoneOffset.UTC;
  */
 public class CreateNewPlayerOrchestratorImpl implements CreateNewPlayerOrchestrator {
 
-    private Supplier<Name> fullNameGenerator;
-    private Supplier<LocalDateTime> dobGenerator;
-    private Supplier<String> countryGenerator;
-    private BigDecimal defaultValue;
+    private final Supplier<Name> fullNameGenerator;
+    private final Supplier<LocalDateTime> dobGenerator;
+    private final Supplier<String> countryGenerator;
+    private final BigDecimal defaultValue;
 
     public CreateNewPlayerOrchestratorImpl(Supplier<Name> fullNameGenerator,
                                            Supplier<LocalDateTime> dobGenerator,

@@ -51,4 +51,16 @@ public class UserManagerImpl implements UserManager {
         Validate.notNull(userId, Constants.ID_CAN_T_BE_NULL);
         return userRepo.findTeamByUserId(userId).orElseThrow(() -> new IllegalStateException(Constants.USER_DOESN_T_HAVE_A_TEAM));
     }
+
+    @Override
+    public Optional<User> findByTeamId(final Long teamId) {
+        Validate.notNull(teamId, Constants.ID_CAN_T_BE_NULL);
+        return userRepo.findByTeamId(teamId);
+    }
+
+    @Override
+    public Optional<User> findByPlayerId(final Long playerId) {
+        Validate.notNull(playerId, Constants.ID_CAN_T_BE_NULL);
+        return userRepo.findByPlayerId(playerId);
+    }
 }

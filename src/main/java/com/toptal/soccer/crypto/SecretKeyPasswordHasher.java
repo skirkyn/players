@@ -19,7 +19,10 @@ public class SecretKeyPasswordHasher implements PasswordHasher {
 
     private final byte[] salt;
 
-    public SecretKeyPasswordHasher(final byte[] salt, final int iterationsCount, final int keyLength, final String secretKeyFactoryAlgorithm) throws Exception {
+    public SecretKeyPasswordHasher(final byte[] salt,
+                                   final int iterationsCount,
+                                   final int keyLength,
+                                   final String secretKeyFactoryAlgorithm) throws Exception {
 
         Validate.notNull(salt, Constants.SALT_CANT_BE_NULL);
         Validate.isTrue(iterationsCount > 0, Constants.ITERATIONS_COUNT_SHOULD_BE_GREATER_THAN_ZERO);
