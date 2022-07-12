@@ -6,6 +6,7 @@ import com.toptal.soccer.dto.Player;
 import com.toptal.soccer.dto.Team;
 import com.toptal.soccer.manager.iface.TeamManager;
 import com.toptal.soccer.manager.iface.UserManager;
+import com.toptal.soccer.orchestrator.iface.UpdateTeamOrchestrator;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,12 +26,15 @@ import java.util.function.Function;
  * This class defines all web API that logically belongs to the Team resource
  */
 @RestController
-public class TeamResource {
+public class TeamResource extends BaseResource{
 
     private static final String LOGGED_USER_IS_NOT_AUTHORIZED_TO_ACCESS_THIS_TEAM =
             "Logged user is not authorized to access this team: ";
     private final UserManager userManager;
     private final TeamManager teamManager;
+
+    private final UpdateTeamOrchestrator updateTeamOrchestrator;
+
     private final Function<Team, com.toptal.soccer.model.Team> teamDTOToTeam;
     private final BiFunction<com.toptal.soccer.model.Team, BigDecimal, Team> teamToTeamDTO;
     private final Function<com.toptal.soccer.model.Player, Player> playerToPlayerDTO;
@@ -38,12 +42,13 @@ public class TeamResource {
 
     public TeamResource(final UserManager userManager,
                         final TeamManager teamManager,
-                        final Function<Team, com.toptal.soccer.model.Team> teamDTOToTeam,
+                        UpdateTeamOrchestrator updateTeamOrchestrator, final Function<Team, com.toptal.soccer.model.Team> teamDTOToTeam,
                         final BiFunction<com.toptal.soccer.model.Team, BigDecimal, Team> teamToTeamDTO,
                         final Function<com.toptal.soccer.model.Player, Player> playerToPlayerDTO,
                         final Crypto crypto) {
         this.userManager = userManager;
         this.teamManager = teamManager;
+        this.updateTeamOrchestrator = updateTeamOrchestrator;
         this.teamDTOToTeam = teamDTOToTeam;
         this.teamToTeamDTO = teamToTeamDTO;
         this.playerToPlayerDTO = playerToPlayerDTO;
@@ -62,11 +67,11 @@ public class TeamResource {
 
         final Long decrypted = Long.valueOf(crypto.decrypt(id));
 
-        if (!Objects.equals(authentication.getPrincipal(), userManager.findUserTeam(decrypted).getId())) {
-            throw new NotAuthorizedException(LOGGED_USER_IS_NOT_AUTHORIZED_TO_ACCESS_THIS_TEAM + id);
-        }
+        userManager.findByTeamId(decrypted).filter(u -> Objects.equals(authentication.getPrincipal(), u.getId()))
+                .orElseThrow(() -> new NotAuthorizedException(LOGGED_USER_IS_NOT_AUTHORIZED_TO_ACCESS_THIS_TEAM + id));
 
-        return teamToTeamDTO.apply(teamDTOToTeam.apply(team), teamManager.findTotalTeamValue(decrypted));
+
+        return teamToTeamDTO.apply(updateTeamOrchestrator.update(teamDTOToTeam.apply(team)), teamManager.findTotalTeamValue(decrypted));
     }
 
     /**
@@ -86,9 +91,8 @@ public class TeamResource {
                                     final Authentication authentication) {
         final Long decrypted = Long.valueOf(crypto.decrypt(id));
 
-        if (!Objects.equals(authentication.getPrincipal(), userManager.findUserTeam(decrypted).getId())) {
-            throw new NotAuthorizedException(LOGGED_USER_IS_NOT_AUTHORIZED_TO_ACCESS_THIS_TEAM + id);
-        }
+        userManager.findByTeamId(decrypted).filter(u -> Objects.equals(authentication.getPrincipal(), u.getId()))
+                .orElseThrow(() -> new NotAuthorizedException(LOGGED_USER_IS_NOT_AUTHORIZED_TO_ACCESS_THIS_TEAM + id));
 
         return teamManager.findPlayersByTeamId(decrypted, start, size).stream().map(playerToPlayerDTO).toList();
     }

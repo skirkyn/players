@@ -3,14 +3,18 @@ package com.toptal.soccer.security;
 import com.toptal.soccer.manager.iface.UserManager;
 import com.toptal.soccer.model.User;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import java.io.IOException;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
@@ -26,22 +30,33 @@ public class JWTRequestFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        final String requestTokenHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (requestTokenHeader != null && requestTokenHeader.startsWith(Constants.BEARER)) {
+        if (!StringUtils.contains(request.getPathInfo(), "user/login")
+                && !StringUtils.contains(request.getPathInfo(), "user/register")) {
 
-            final String jwtToken = StringUtils.substringAfter(requestTokenHeader, Constants.BEARER);
 
-            if (!jwtValidator.test(jwtToken, id -> userManager.findById(id)
-                    .stream().peek(u ->
-                        SecurityContextHolder.getContext()
-                                .setAuthentication(
-                                        new PreAuthenticatedAuthenticationToken(u.getId(), jwtToken))
+            final String requestTokenHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+            if (requestTokenHeader != null && requestTokenHeader.startsWith(Constants.BEARER)) {
 
-                    ).findFirst())) {
-                throw new SecurityException(Constants.JWT_TOKEN_IS_INVALID);
+                final String jwtToken = StringUtils.substringAfter(requestTokenHeader, Constants.BEARER);
+
+                if (!jwtValidator.test(jwtToken, id -> userManager.findById(id)
+                        .stream().peek(u ->
+                                SecurityContextHolder.getContext()
+                                        .setAuthentication(
+                                                new PreAuthenticatedAuthenticationToken(u.getId(), jwtToken, Collections.emptyList()))
+
+                        ).findFirst())) {
+                    response.sendError(HttpStatus.UNAUTHORIZED.value());
+                    return;
+                }
+
+            } else {
+                response.sendError(HttpStatus.UNAUTHORIZED.value());
+                return;
             }
         }
+        filterChain.doFilter(request, response);
     }
 }

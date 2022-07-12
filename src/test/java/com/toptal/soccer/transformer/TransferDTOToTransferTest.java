@@ -17,12 +17,15 @@ public class TransferDTOToTransferTest {
     private static final Long BUYER_ID = 2L;
 
     private TransferDTOToTransfer transferDTOToTransfer;
+    private PlayerDTOToPlayer playerDTOToPlayer;
+
     private Crypto crypto;
 
     @BeforeEach
     public void setUp() throws NoSuchAlgorithmException {
         crypto = (new AESCrypto("the key"));
-        transferDTOToTransfer = new TransferDTOToTransfer(crypto);
+        playerDTOToPlayer = new PlayerDTOToPlayer(crypto);
+        transferDTOToTransfer = new TransferDTOToTransfer(crypto, playerDTOToPlayer);
     }
 
     @Test
@@ -33,8 +36,13 @@ public class TransferDTOToTransferTest {
         dto.setSellerId(crypto.encrypt(BUYER_ID.toString()));
         final Player player = new Player();
         player.setId(crypto.encrypt(PLAYER_ID.toString()));
+        player.setCountry("country");
+        player.setFirstName("fName");
+        player.setLastName("lName");
+        player.setType(Player.Type.ATTACKER);
         dto.setPlayer(player);
         dto.setId(crypto.encrypt(ID.toString()));
+
 
         // when
         final com.toptal.soccer.model.Transfer transformed = transferDTOToTransfer.apply(dto);
@@ -102,6 +110,10 @@ public class TransferDTOToTransferTest {
         final Transfer dto = new Transfer();
         dto.setSellerId(crypto.encrypt(BUYER_ID.toString()));
         final Player player = new Player();
+        player.setCountry("country");
+        player.setFirstName("fName");
+        player.setLastName("lName");
+        player.setType(Player.Type.ATTACKER);
         player.setId(crypto.encrypt(PLAYER_ID.toString()));
         dto.setPlayer(player);
         dto.setId(crypto.encrypt(ID.toString()));

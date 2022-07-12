@@ -49,12 +49,13 @@ public class TransformerConfig {
     }
 
     @Bean
-    public Function<com.toptal.soccer.dto.Transfer, Transfer> transferDTOToTransfer(final Crypto crypto) {
-        return new TransferDTOToTransfer(crypto);
+    public Function<com.toptal.soccer.dto.Transfer, Transfer> transferDTOToTransfer(final Crypto crypto,
+                                                                                    final Function< com.toptal.soccer.dto.Player, Player> playerDtoToPlayer) {
+        return new TransferDTOToTransfer(crypto, playerDtoToPlayer);
     }
 
     @Bean
-    public Function<Transfer, com.toptal.soccer.dto.Transfer> userToTransferDTO(final Crypto crypto,
+    public Function<Transfer, com.toptal.soccer.dto.Transfer> transferToTransferDTO(final Crypto crypto,
                                                                                 final Function<Player, com.toptal.soccer.dto.Player> playerToPlayerDTO) {
         return new TransferToTransferDTO(crypto, playerToPlayerDTO);
     }

@@ -58,5 +58,13 @@ public interface UserManager {
      * @return an optional object with the user if the user with such email exists. Otherwise, an empty optional
      */
     Optional<User> findByPlayerId(Long playerId);
+
+    /**
+     * Returns User by their  -> player id.
+     *
+     * @param playerId team id of the user
+     * @return an optional object with the user if the user with such email exists. Otherwise, an empty optional
+     */
+    Optional<User> findByTransferId(Long playerId);
 }
 

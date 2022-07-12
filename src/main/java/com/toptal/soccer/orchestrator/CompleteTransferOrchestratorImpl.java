@@ -36,7 +36,6 @@ public class CompleteTransferOrchestratorImpl implements CompleteTransferOrchest
 
 
     @Override
-    @Transactional
     public Transfer complete(Long transferId, Long buyerId) {
 
         Validate.notNull(buyerId, Constants.BUYER_ID_CAN_T_BE_NULL);
@@ -54,7 +53,7 @@ public class CompleteTransferOrchestratorImpl implements CompleteTransferOrchest
 
         final User buyer = userManager.findById(buyerId).orElseThrow(() -> new IllegalArgumentException(Constants.BUYER_DOESNT_EXIST));
 
-        if(Objects.equals(buyer.getId(), seller.getId())){
+        if (Objects.equals(buyer.getId(), seller.getId())) {
             throw new IllegalArgumentException(Constants.USER_CAN_T_SELL_THE_PLAYER_TO_THEMSELVES);
         }
 
@@ -73,7 +72,9 @@ public class CompleteTransferOrchestratorImpl implements CompleteTransferOrchest
 
         // update players
         seller.getTeam().getPlayers().remove(playerForSale);
+        userManager.save(seller);
         buyer.getTeam().getPlayers().add(playerForSale);
+        userManager.save(buyer);
 
         int percentOfIncrease = Util.randomFromRange(playerValueIncrementPercentMin,
                 playerValueIncrementPercentMax);

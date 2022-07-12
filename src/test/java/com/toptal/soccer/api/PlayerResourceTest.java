@@ -1,20 +1,28 @@
 package com.toptal.soccer.api;
 
+import com.toptal.soccer.SoccerApplication;
 import com.toptal.soccer.dto.LoginResult;
 import com.toptal.soccer.dto.Player;
 import com.toptal.soccer.dto.User;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Disabled
+
+@ExtendWith(SpringExtension.class)
 @TestPropertySource("classpath:application-test.properties")
-@WebMvcTest({UserResource.class, TeamResource.class, PlayerResource.class})
+@ContextConfiguration(classes = { SoccerApplication.class })
+@WebAppConfiguration
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class PlayerResourceTest extends BaseResourceTest {
 
     public static final String EMAIL = "email";

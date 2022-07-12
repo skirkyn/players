@@ -1,7 +1,6 @@
 package com.toptal.soccer.orchestrator.config;
 
-import com.toptal.soccer.generator.FakerCountryGenerator;
-import com.toptal.soccer.generator.FakerTeamNameGenerator;
+import com.toptal.soccer.generator.config.GeneratorConfig;
 import com.toptal.soccer.model.Player;
 import com.toptal.soccer.orchestrator.CreateNewTeamOrchestratorImpl;
 import com.toptal.soccer.orchestrator.iface.CreateNewPlayerOrchestrator;
@@ -16,21 +15,11 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 @Configuration
-@Import(CreateNewPlayerOrchestratorConfig.class)
+@Import({CreateNewPlayerOrchestratorConfig.class, GeneratorConfig.class})
 public class CreateNewTeamOrchestratorConfig {
 
     @Bean
-    public Supplier<String> countryGenerator() {
-        return new FakerCountryGenerator();
-    }
-
-    @Bean
-    public Supplier<String> teamNameGenerator() {
-        return new FakerTeamNameGenerator();
-    }
-
-    @Bean
-    public CreateNewTeamOrchestrator createNewPlayerOrchestrator(
+    public CreateNewTeamOrchestrator createNewTeamrOrchestrator(
             final CreateNewPlayerOrchestrator createNewPlayerOrchestrator,
             final Supplier<String> teamNameGenerator,
             final Supplier<String> countryGenerator,

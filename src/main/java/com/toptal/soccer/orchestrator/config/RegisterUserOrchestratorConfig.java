@@ -18,10 +18,10 @@ public class RegisterUserOrchestratorConfig {
 
 
     @Bean
-    public PasswordHasher passwordHasher(@Value("${soccer.orchestrator.user.password.hasher.salt") final byte[] salt,
-                                         @Value("${soccer.orchestrator.user.password.hasher.iterations.count") final int iterationsCount,
-                                         @Value("${soccer.orchestrator.user.password.hasher.key.length") final int keyLength,
-                                         @Value("${soccer.orchestrator.user.password.hasher.secret.factory.algorithm") final String secretFactoryAlgorithm) throws Exception {
+    public PasswordHasher passwordHasher(@Value("${soccer.orchestrator.user.password.hasher.salt}") final byte[] salt,
+                                         @Value("${soccer.orchestrator.user.password.hasher.iterations.count}") final int iterationsCount,
+                                         @Value("${soccer.orchestrator.user.password.hasher.key.length}") final int keyLength,
+                                         @Value("${soccer.orchestrator.user.password.hasher.secret.factory.algorithm}") final String secretFactoryAlgorithm) throws Exception {
         return new SecretKeyPasswordHasher(salt, iterationsCount, keyLength, secretFactoryAlgorithm);
     }
 

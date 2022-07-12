@@ -10,7 +10,7 @@ import org.apache.commons.lang3.Validate;
 import java.util.Optional;
 
 /**
- * This class implements player manager functionality
+ * This class implements user manager functionality
  */
 public class UserManagerImpl implements UserManager {
 
@@ -38,7 +38,7 @@ public class UserManagerImpl implements UserManager {
 
 
     @Override
-    @Transactional
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
     public User save(final User team) {
         Validate.notNull(team, Constants.
                 PLAYER_ID_CAN_T_BE_NULL);
@@ -62,5 +62,12 @@ public class UserManagerImpl implements UserManager {
     public Optional<User> findByPlayerId(final Long playerId) {
         Validate.notNull(playerId, Constants.ID_CAN_T_BE_NULL);
         return userRepo.findByPlayerId(playerId);
+    }
+
+    @Override
+    public Optional<User> findByTransferId(Long playerId) {
+        Validate.notNull(playerId, Constants.ID_CAN_T_BE_NULL);
+
+        return userRepo.findByTransferId(playerId);
     }
 }

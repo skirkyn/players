@@ -45,7 +45,7 @@ public class CreateNewPlayerOrchestratorImplTest{
         Assertions.assertEquals(country, player.getCountry());
         Assertions.assertEquals(first, player.getFirstName());
         Assertions.assertEquals(last, player.getLastName());
-        Assertions.assertEquals(now.atZone(UTC).toInstant().getEpochSecond(), player.getDateOfBirth());
+        Assertions.assertEquals(now.atZone(UTC).toLocalDate(), player.getDateOfBirth().toLocalDate());
 
     }
 }

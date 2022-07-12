@@ -1,5 +1,6 @@
 package com.toptal.soccer.repo;
 
+import com.toptal.soccer.model.Transfer;
 import com.toptal.soccer.model.User;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -9,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static com.toptal.soccer.TestUtil.generateUserWithTeam;
 
 
-public class UserRepoTest extends BaseRepoTest{
+public class UserRepoTest extends BaseRepoTest {
 
     @Autowired
     private UserRepo repo;
@@ -17,11 +18,10 @@ public class UserRepoTest extends BaseRepoTest{
 
     @Test
     @Transactional
-    public void testFindsByEmail(){
+    public void testFindsByEmail() {
 
         // given
         final User user = save(generateUserWithTeam(() -> null));
-        Assertions.assertNull(user.getId());
 
         // then
         Assertions.assertNotNull(user.getId());
@@ -31,7 +31,7 @@ public class UserRepoTest extends BaseRepoTest{
 
     @Test
     @Transactional
-    public void testFindsTheTeam(){
+    public void testFindsTheTeam() {
 
         // given
         final User user = save(generateUserWithTeam(() -> null));
@@ -45,7 +45,7 @@ public class UserRepoTest extends BaseRepoTest{
 
     @Test
     @Transactional
-    public void testFindsUserByTeamId(){
+    public void testFindsUserByTeamId() {
 
         // given
         final User user = save(generateUserWithTeam(() -> null));
@@ -57,10 +57,9 @@ public class UserRepoTest extends BaseRepoTest{
     }
 
 
-
     @Test
     @Transactional
-    public void testFindsUserByPlayerId(){
+    public void testFindsUserByPlayerId() {
 
         // given
         final User user = save(generateUserWithTeam(() -> null));
@@ -71,6 +70,22 @@ public class UserRepoTest extends BaseRepoTest{
 
     }
 
+
+    @Test
+    @Transactional
+    public void testFindsUserByTransferId() {
+
+        // given
+        final User user = save(generateUserWithTeam(() -> null));
+
+        final Transfer transfer = new Transfer(null, user.getTeam().getPlayers().get(0), user, null);
+        save(transfer);
+
+        // then
+
+        Assertions.assertEquals(user, repo.findByTransferId(transfer.getId()).get());
+
+    }
 
 
 }

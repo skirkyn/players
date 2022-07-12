@@ -37,7 +37,7 @@ public class PlayerDTOToPlayer implements Function<com.toptal.soccer.dto.Player,
         player.setCountry(dto.getCountry());
         player.setFirstName(dto.getFirstName());
         player.setLastName(dto.getLastName());
-
+        player.setType(Player.Type.valueOf(dto.getType().name()));
         return player;
     }
 }

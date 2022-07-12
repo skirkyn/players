@@ -20,8 +20,11 @@ public interface UserRepo extends CrudRepository<User, Long> {
 
     Optional<User> findByTeamId(Long teamId);
 
-    @Query(value = "select u from user u " +
+    @Query(value = "select u.* from users u " +
             "join team t on t.id = u.team_id " +
-            "join team_players tp on tp.team_id = t.id where tp.id = :playerId", nativeQuery = true)
+            "join team_players tp on tp.team_id = t.id where tp.players_id = :playerId", nativeQuery = true)
     Optional<User> findByPlayerId(Long playerId);
+
+    @Query(value = "select u.* from users u join transfer t on u.id = t.seller_id where  t.id = :transferId", nativeQuery = true)
+    Optional<User> findByTransferId(Long transferId);
 }

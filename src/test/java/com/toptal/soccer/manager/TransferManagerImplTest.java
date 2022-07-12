@@ -1,5 +1,6 @@
 package com.toptal.soccer.manager;
 
+import com.toptal.soccer.TestUtil;
 import com.toptal.soccer.model.Transfer;
 import com.toptal.soccer.repo.TransferRepo;
 import org.junit.jupiter.api.Assertions;
@@ -41,6 +42,8 @@ public class TransferManagerImplTest {
     public void testSavesIfPlayerNotNull() {
         // when
         final Transfer transfer = new Transfer();
+        transfer.setSeller(TestUtil.generateUserWithoutTeam());
+        transfer.setPlayer(TestUtil.generatePlayer());
         transferManager.save(transfer);
         // then
         verify(transferRepo).save(eq(transfer));
@@ -67,8 +70,8 @@ public class TransferManagerImplTest {
 
     @Test
     public void testGeneratesErrorIfPagingParamsAreWrongForFindAll() {
-        Assertions.assertThrows(NullPointerException.class, () -> transferManager.findAll(10, 0));
-        Assertions.assertThrows(NullPointerException.class, () -> transferManager.findAll(-1, 1));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> transferManager.findAll(10, 0));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> transferManager.findAll(-1, 1));
 
     }
 }

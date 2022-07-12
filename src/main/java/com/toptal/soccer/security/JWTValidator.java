@@ -41,7 +41,7 @@ public class JWTValidator implements  BiPredicate<String, Function<Long, Optiona
 
             return Objects.equals(user.getId(), userId) && expiration.after(new Date());
 
-        } catch (ExpiredJwtException e) {
+        } catch (Exception e) {
             log.warn(e.getMessage());
             return false;
         }

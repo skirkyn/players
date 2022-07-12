@@ -13,9 +13,11 @@ import java.util.function.Function;
  */
 public class TransferDTOToTransfer implements Function<com.toptal.soccer.dto.Transfer, Transfer> {
     private final Crypto crypto;
+    private final Function<com.toptal.soccer.dto.Player, Player > playerDtoToPlayer;
 
-    public TransferDTOToTransfer(Crypto crypto) {
+    public TransferDTOToTransfer(Crypto crypto, Function<com.toptal.soccer.dto.Player, Player> playerDtoToPlayer) {
         this.crypto = crypto;
+        this.playerDtoToPlayer = playerDtoToPlayer;
     }
 
     @Override
@@ -30,10 +32,7 @@ public class TransferDTOToTransfer implements Function<com.toptal.soccer.dto.Tra
 
         transfer.setId(dto.getId() == null ? null : Long.valueOf(crypto.decrypt(dto.getId())));
 
-        final Player player = new Player();
-        player.setId(Long.valueOf(crypto.decrypt(dto.getPlayer().getId())));
-
-        transfer.setPlayer(player);
+        transfer.setPlayer(playerDtoToPlayer.apply(dto.getPlayer()));
 
         final User seller = new User();
         seller.setId(Long.valueOf(crypto.decrypt(dto.getSellerId())));

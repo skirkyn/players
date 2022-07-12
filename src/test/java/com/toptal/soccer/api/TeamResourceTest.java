@@ -1,5 +1,6 @@
 package com.toptal.soccer.api;
 
+import com.toptal.soccer.SoccerApplication;
 import com.toptal.soccer.dto.LoginResult;
 import com.toptal.soccer.dto.Player;
 import com.toptal.soccer.dto.Team;
@@ -7,18 +8,26 @@ import com.toptal.soccer.dto.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Disabled
+
+@ExtendWith(SpringExtension.class)
 @TestPropertySource("classpath:application-test.properties")
-@WebMvcTest({UserResource.class, TeamResource.class})
+@ContextConfiguration(classes = { SoccerApplication.class })
+@WebAppConfiguration
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class TeamResourceTest extends BaseResourceTest {
 
     public static final String EMAIL = "email";
@@ -26,7 +35,7 @@ public class TeamResourceTest extends BaseResourceTest {
     public static final String ANOTHER_NAME = "another_name_";
     public static final String ANOTHER_COUNTRY = "another_country_";
 
-    @Value("${team.default.budget:5000000}")
+    @Value("${team.default.budget:5000000.00}")
     private String defaultBudget;
 
     @Value("${team.default.player.count:20}")
@@ -158,7 +167,7 @@ public class TeamResourceTest extends BaseResourceTest {
         Assertions.assertNotNull(secondUser.getId());
 
         // log in with second firstUser
-        LoginResult loginResultResultSecond = loginAndReturnResult(EMAIL, PASSWORD);
+        LoginResult loginResultResultSecond = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
 
         getPlayers(team.getId(), defaultPlayerCount + TEN, loginResultResultSecond.getToken()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
 

@@ -11,7 +11,7 @@ public class CryptoConfig {
     @Bean
     public Crypto jwtCrypto(@Value("${soccer.crypto.secret}") final String secret,
                             @Value("${soccer.crypto.transformation}") final String transformation,
-                            @Value("${soccer.crypto.key.hashing.algorithm=}") final String hashingAlgorithm) throws Exception {
+                            @Value("${soccer.crypto.key.hashing.algorithm}") final String hashingAlgorithm) throws Exception {
         return new AESCrypto(secret, transformation, hashingAlgorithm);
     }
 }

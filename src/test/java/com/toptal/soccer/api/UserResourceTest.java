@@ -1,30 +1,38 @@
 package com.toptal.soccer.api;
 
+import com.toptal.soccer.SoccerApplication;
 import com.toptal.soccer.dto.LoginResult;
 import com.toptal.soccer.dto.Team;
 import com.toptal.soccer.dto.User;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Disabled
+
+@ExtendWith(SpringExtension.class)
 @TestPropertySource("classpath:application-test.properties")
-@WebMvcTest(UserResource.class)
+@ContextConfiguration(classes = { SoccerApplication.class })
+@WebAppConfiguration
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class UserResourceTest extends BaseResourceTest {
-    @Value("${team.default.budget:5000000}")
+
+    @Value("${team.default.budget:5000000.00}")
     private String defaultBudget;
     @Value("${team.default.player.count:20}")
     private int defaultPlayerCount;
-    @Value("${team.default.player.value:1000000}")
+    @Value("${team.default.player.value:1000000.00}")
     private String defaultPlayerValue;
     @Value("${game.default.currency:$}")
     private String defaultCurrency;
@@ -55,10 +63,10 @@ public class UserResourceTest extends BaseResourceTest {
     @Test
     public void testUserCantRegisterIfTheEmailOrPasswordIsEmpty() throws Exception {
         // empty email registration fails
-        createUser(null, PASSWORD).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
+        createUser(null, PASSWORD).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
 
         // empty password registration fails
-        createUser(EMAIL, null).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
+        createUser(EMAIL, null).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
 
     }
 
@@ -120,7 +128,7 @@ public class UserResourceTest extends BaseResourceTest {
         Assertions.assertNotNull(created.getId());
 
         // log in
-        LoginResult loginResult = loginAndReturnResult(OTHER_EMAIL, PASSWORD);
+        LoginResult loginResult = loginAndReturnResult(EMAIL, PASSWORD);
 
         // read the team
         Team team = getTeamAndReturnResult(created.getId(), loginResult.getToken());

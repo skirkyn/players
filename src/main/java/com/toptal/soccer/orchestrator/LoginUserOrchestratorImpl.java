@@ -4,6 +4,7 @@ import com.toptal.soccer.crypto.iface.PasswordHasher;
 import com.toptal.soccer.manager.iface.UserManager;
 import com.toptal.soccer.model.User;
 import com.toptal.soccer.orchestrator.iface.LoginUserOrchestrator;
+import com.toptal.soccer.security.SecurityException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
@@ -38,7 +39,7 @@ public class LoginUserOrchestratorImpl implements LoginUserOrchestrator {
 
         final User user = userManager.findUserByEmail(email)
                 .filter(u -> checkHashesMatch(password, u))
-                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
+                .orElseThrow(() -> new SecurityException("Invalid email or password"));
 
         final String token = jwtGenerator.apply(new HashMap<>(), user);
 

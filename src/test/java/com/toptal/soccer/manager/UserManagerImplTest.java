@@ -112,4 +112,17 @@ public class UserManagerImplTest {
         Assertions.assertThrows(NullPointerException.class, () -> userManager.findByPlayerId(null));
     }
 
+    @Test
+    public void testFindsByTransferIdIfPlayerIdIsNotNull(){
+        // when
+        userManager.findByPlayerId(ID);
+        // then
+        verify(userRepo).findByPlayerId(eq(ID));
+    }
+
+    @Test
+    public void testGeneratesErrorIfTransferIdIsNull(){
+        Assertions.assertThrows(NullPointerException.class, () -> userManager.findByTransferId(null));
+    }
+
 }

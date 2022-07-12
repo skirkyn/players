@@ -8,13 +8,18 @@ import com.toptal.soccer.dto.Player;
 import com.toptal.soccer.dto.Team;
 import com.toptal.soccer.dto.Transfer;
 import com.toptal.soccer.dto.User;
+import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
@@ -29,11 +34,17 @@ public abstract class BaseResourceTest {
     protected static final int TEN = 10;
     protected static final String TEN_STR = "10";
     @Autowired
+    private WebApplicationContext webApplicationContext;
     protected MockMvc mockMvc;
     protected final ObjectMapper objectMapper = new ObjectMapper();
-
+    @BeforeEach
+    public void setUp() throws Exception {
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext)
+                .apply(SecurityMockMvcConfigurers.springSecurity())
+                .build();
+    }
     protected ResultActions createUser(final String email, final String password) throws Exception {
-        return mockMvc.perform(MockMvcRequestBuilders.post("/user")
+        return mockMvc.perform(MockMvcRequestBuilders.post("/user/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsBytes(new User(null, email, password))));
@@ -65,8 +76,7 @@ public abstract class BaseResourceTest {
     }
 
     protected ResultActions login(final String email, final String password) throws Exception {
-        return mockMvc.perform(MockMvcRequestBuilders.get("/user/login")
-
+        return mockMvc.perform(MockMvcRequestBuilders.post("/user/login")
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsBytes(new Credentials(email, password))));
@@ -83,7 +93,8 @@ public abstract class BaseResourceTest {
     protected ResultActions getTeam(final String userId, final String token) throws Exception {
         return mockMvc.perform(MockMvcRequestBuilders.get("/user/" + userId + "/team")
                 .header("Authorization", "Bearer " + token)
-                .accept(MediaType.APPLICATION_JSON_VALUE));
+                        .contentType(MediaType.TEXT_HTML)
+                .accept(MediaType.APPLICATION_JSON));
     }
 
     protected Team getTeamAndReturnResult(final String userId, final String token) throws Exception {
@@ -93,7 +104,7 @@ public abstract class BaseResourceTest {
     }
 
     protected ResultActions updateTeam(final Team team, final String teamId, final String token) throws Exception {
-        return mockMvc.perform(MockMvcRequestBuilders.post("/team/" + teamId)
+        return mockMvc.perform(MockMvcRequestBuilders.patch("/team/" + teamId)
                 .header("Authorization", "Bearer " + token)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -120,7 +131,7 @@ public abstract class BaseResourceTest {
     }
 
     protected ResultActions updatePlayer(final Player player, final String playerId, final String token) throws Exception {
-        return mockMvc.perform(MockMvcRequestBuilders.post("/player/" + playerId)
+        return mockMvc.perform(MockMvcRequestBuilders.patch("/player/" + playerId)
                 .header("Authorization", "Bearer " + token)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -135,7 +146,7 @@ public abstract class BaseResourceTest {
 
 
     protected ResultActions getPlayer(final String playerId, final String token) throws Exception {
-        return mockMvc.perform(MockMvcRequestBuilders.post("/player/" + playerId)
+        return mockMvc.perform(MockMvcRequestBuilders.get("/player/" + playerId)
                 .header("Authorization", "Bearer " + token)
                 .accept(MediaType.APPLICATION_JSON_VALUE));
     }
@@ -147,7 +158,7 @@ public abstract class BaseResourceTest {
     }
 
     protected ResultActions addTransfer(final Transfer transfer, final String token) throws Exception {
-        return mockMvc.perform(MockMvcRequestBuilders.post("/transfer/")
+        return mockMvc.perform(MockMvcRequestBuilders.post("/transfer")
                 .header("Authorization", "Bearer " + token)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -162,7 +173,7 @@ public abstract class BaseResourceTest {
 
 
     protected ResultActions completeTransfer(final String transferId, final String toUserId, final String token) throws Exception {
-        return mockMvc.perform(MockMvcRequestBuilders.patch(String.format("/transfer/%s/to/%s", transferId, toUserId))
+        return mockMvc.perform(MockMvcRequestBuilders.post(String.format("/transfer/%s/to/%s", transferId, toUserId))
                 .header("Authorization", "Bearer " + token)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE));

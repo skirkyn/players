@@ -1,5 +1,6 @@
 package com.toptal.soccer.api;
 
+import com.toptal.soccer.SoccerApplication;
 import com.toptal.soccer.dto.LoginResult;
 import com.toptal.soccer.dto.Player;
 import com.toptal.soccer.dto.Transfer;
@@ -7,18 +8,26 @@ import com.toptal.soccer.dto.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Disabled
+
+@ExtendWith(SpringExtension.class)
 @TestPropertySource("classpath:application-test.properties")
-@WebMvcTest({UserResource.class, TeamResource.class, PlayerResource.class, TransferListResource.class})
+@ContextConfiguration(classes = { SoccerApplication.class })
+@WebAppConfiguration
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class TransferListrResourceTest extends BaseResourceTest {
 
     public static final String EMAIL = "email";
@@ -67,7 +76,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
 
         // log in with the second user
         LoginResult secondLoginResultResult = loginAndReturnResult(EMAIL, PASSWORD);
-        Transfer toAdd = new Transfer(null,  player, firstUser.getId(), null);
+        Transfer toAdd = new Transfer(null,  player, secondUser.getId(), null);
         addTransfer(toAdd, secondLoginResultResult.getToken()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
 
     }
@@ -111,7 +120,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
         Transfer toAdd = new Transfer(null, player, user.getId(), null);
         Transfer transfer = addTransferAndReturnResult(toAdd, loginResult.getToken());
 
-        Assertions.assertNull(transfer.getSellerId());
+        Assertions.assertNotNull(transfer.getSellerId());
 
         User anotherUser = createAndReturnUser(OTHER_EMAIL, PASSWORD);
 
@@ -121,7 +130,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
                 loginResultResultAnotherUser.getToken());
         Assertions.assertNotNull(transferAfterCompletion.getBuyerId());
 
-        Player afterTransfer = getPlayerAndReturnResult(player.getId(), loginResult.getToken());
+        Player afterTransfer = getPlayerAndReturnResult(player.getId(), loginResultResultAnotherUser.getToken());
 
         // verify that the players value raised
         Assertions.assertTrue(new BigDecimal(player.getValue().replaceAll("\\$", "")).compareTo(
@@ -148,7 +157,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
         Transfer toAdd = new Transfer(null,  player, user.getId(), null);
         Transfer transfer = addTransferAndReturnResult(toAdd, loginResult.getToken());
 
-        Assertions.assertNull(transfer.getSellerId());
+        Assertions.assertNotNull(transfer.getSellerId());
 
         User anotherUser = createAndReturnUser(OTHER_EMAIL, PASSWORD);
 
@@ -177,7 +186,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
         Transfer toAdd = new Transfer(null,  player, user.getId(), null);
         Transfer transfer = addTransferAndReturnResult(toAdd, loginResult.getToken());
 
-        Assertions.assertNull(transfer.getSellerId());
+        Assertions.assertNotNull(transfer.getSellerId());
 
         // transfering to themselves can't work
         completeTransfer(transfer.getId(), user.getId(), loginResult.getToken()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
@@ -202,7 +211,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
         Transfer toAdd = new Transfer(null,  player, user.getId(), null);
         Transfer transfer = addTransferAndReturnResult(toAdd, loginResult.getToken());
 
-        Assertions.assertNull(transfer.getSellerId());
+        Assertions.assertNotNull(transfer.getSellerId());
 
         User anotherUser = createAndReturnUser(OTHER_EMAIL, PASSWORD);
 
@@ -236,7 +245,7 @@ public class TransferListrResourceTest extends BaseResourceTest {
         List<Transfer> transfers = getTransfersAndReturnList(loginResultResultAnotherUser.getToken(), 20);
         Assertions.assertNotNull(transfers);
         Assertions.assertEquals(1, transfers.size());
-        Assertions.assertEquals(transfer, transfers.get(0));
+        Assertions.assertEquals(transfer.getId(), transfers.get(0).getId());
     }
 
     @Test
@@ -289,9 +298,9 @@ public class TransferListrResourceTest extends BaseResourceTest {
         Transfer toAdd = new Transfer(null,  player, user.getId(), null);
         Transfer transfer = addTransferAndReturnResult(toAdd, loginResult.getToken());
 
-        Assertions.assertNull(transfer.getSellerId());
+        Assertions.assertNotNull(transfer.getSellerId());
 
-        getTransfers(null, 20).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
+        getTransfers(null, 20).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
 
     }
 

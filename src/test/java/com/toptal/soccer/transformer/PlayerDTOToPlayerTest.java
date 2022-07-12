@@ -46,7 +46,6 @@ public class PlayerDTOToPlayerTest {
 
         Assertions.assertNull(transformed.getDateOfBirth());
         Assertions.assertNull(transformed.getValue());
-        Assertions.assertNull(transformed.getType());
 
     }
 

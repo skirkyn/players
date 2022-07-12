@@ -2,9 +2,9 @@ package com.toptal.soccer.orchestrator;
 
 
 /**
- * Class to store some constants for the crypto module
+ * Class to store some constants for the orchestrator module
  */
-public class Constants {
+public final class Constants {
     public static final String EMAIL_CAN_T_BE_EMPTY = "Email can't be empty";
     public static final String PASSWORD_CAN_T_BE_EMPTY = "Password can't be empty";
     public static final String PLAYER_CAN_T_BE_NULL = "Player can't be null";

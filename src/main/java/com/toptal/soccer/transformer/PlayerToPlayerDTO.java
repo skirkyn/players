@@ -33,15 +33,21 @@ public class PlayerToPlayerDTO implements Function<Player, com.toptal.soccer.dto
         dto.setType(com.toptal.soccer.dto.Player.Type.valueOf(player.getType().name()));
 
         // find player's age
-        dto.setAge(Period.between(player.getDateOfBirth().toLocalDate(),
-                LocalDateTime.now(UTC).toLocalDate()).getYears());
+        if(player.getDateOfBirth() != null){
+            dto.setAge(Period.between(player.getDateOfBirth().toLocalDate(),
+                    LocalDateTime.now(UTC).toLocalDate()).getYears());
+        }
+
         dto.setLastName(player.getLastName());
         dto.setFirstName(player.getFirstName());
         dto.setCountry(player.getCountry());
 
         // format the value
-        dto.setValue(player.getValueCurrency().getSign()
-                + player.getValue().setScale(2, RoundingMode.HALF_UP));
+        if(player.getValue() != null){
+            dto.setValue(player.getValueCurrency().getSign()
+                    + player.getValue().setScale(2, RoundingMode.HALF_UP));
+        }
+
 
 
         return dto;
