@@ -1,0 +1,14 @@
+PATCH localhost:8080/player/N9TC2ybtTUmIJxf44ToIfg==
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJOOVRDMnlidFRVbUlKeGY0NFRvSWZnPT0iLCJleHAiOjE2NTc2OTAwNzIsImlhdCI6MTY1NzY1NDA3Mn0.INvJqg8PvQ3l_LzjlQfTXB17J01efeSzfXwX-klYe7lPmH0wd_UHq4ZL2JYpvgYvikmy0l6pCyv7hoHY7qedYg
+
+{
+  "id": "N9TC2ybtTUmIJxf44ToIfg==",
+  "firstName": "CortneyChanged",
+  "lastName": "SchillerChanged",
+  "country": "Cook Islands",
+  "value": "$1000000.00",
+  "age": 28,
+  "type": "GOALKEEPER"
+}
