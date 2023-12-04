@@ -1,4 +1,4 @@
-#### A Soccer online manager game API (a portfolio project)
+#### A Soccer online manager game API (a portfolio kid of project that I made for one of the places I've interviewed)
 
 User must be able to create an account and log in using the API.    \
 Each user can have only one team (user is identified by an email)     \
